@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hétvégi Rendezvény – Jelentkezés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0d1117;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .page { width: 100%; max-width: 560px; }
+
+  .hero { text-align: center; margin-bottom: 2.5rem; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #c9a96e;
+    border: 1px solid #c9a96e44;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: #f5f0e8;
+    line-height: 1.15;
+    margin-bottom: .8rem;
+  }
+
+  h1 em { font-style: italic; color: #c9a96e; }
+
+  .sub { font-size: .95rem; color: #8b8fa8; line-height: 1.6; }
+
+  .card {
+    background: #13181f;
+    border: 1px solid #ffffff12;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a96e44, transparent);
+  }
+
+  .spots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .spot-bar {
+    flex: 1;
+    height: 4px;
+    background: #ffffff0d;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .spot-fill {
+    height: 100%;
+    background: #c9a96e;
+    border-radius: 2px;
+    width: 62%;
+  }
+
+  .spot-txt { font-size: .8rem; color: #8b8fa8; white-space: nowrap; }
+
+  .field { margin-bottom: 1.4rem; }
+
+  label {
+    display: block;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #c9a96e;
+    margin-bottom: .5rem;
+    font-weight: 500;
+  }
+
+  input[type=text],
+  input[type=email],
+  input[type=tel],
+  textarea {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid #ffffff18;
+    border-radius: 10px;
+    padding: .75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #f5f0e8;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  input[type=text]:focus,
+  input[type=email]:focus,
+  input[type=tel]:focus,
+  textarea:focus { border-color: #c9a96e66; }
+
+  input::placeholder, textarea::placeholder { color: #ffffff30; }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .allergy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+    margin-top: .4rem;
+  }
+
+  .allergy-opt {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: #0d1117;
+    border: 1px solid #ffffff18;
+    border-radius: 8px;
+    padding: .5rem .75rem;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+
+  .allergy-opt:hover { border-color: #c9a96e44; }
+
+  .allergy-opt input[type=checkbox] {
+    width: 15px; height: 15px;
+    accent-color: #c9a96e;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .allergy-opt span { font-size: .85rem; color: #c0bdb5; }
+
+  .divider { height: 1px; background: #ffffff0a; margin: 1.5rem 0; }
+
+  .submit {
+    width: 100%;
+    background: #c9a96e;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0d1117;
+    cursor: pointer;
+    letter-spacing: .02em;
+    transition: all .2s;
+    margin-top: .5rem;
+  }
+
+  .submit:hover { background: #d9b97e; transform: translateY(-1px); }
+  .submit:active { transform: translateY(0); }
+  .submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  .footer-note {
+    text-align: center;
+    font-size: .8rem;
+    color: #ffffff28;
+    margin-top: 1rem;
+  }
+
+  .success-box {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .success-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .success-box h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    color: #f5f0e8;
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+  }
+
+  .success-box p { color: #8b8fa8; font-size: .95rem; }
+
+  .error-msg {
+    display: none;
+    background: #2d1515;
+    border: 1px solid #c9a96e33;
+    border-radius: 10px;
+    padding: .75rem 1rem;
+    color: #e88;
+    font-size: .85rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 2.1rem; }
+    .row { grid-template-columns: 1fr; }
+    .allergy-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="hero">
+    <div class="badge">Meghívó · 2025 nyár</div>
+    <h1>Csatlakozz<br>a <em>hétvégéhez</em></h1>
+    <p class="sub">45 barát · Egy felejthetetlen hétvége · Regisztrálj az alábbi űrlapon</p>
+  </div>
+
+  <div class="card">
+    <div class="spots">
+      <span class="spot-txt">Helyek foglalása folyamatban</span>
+      <div class="spot-bar"><div class="spot-fill"></div></div>
+      <span class="spot-txt">45 fő</span>
+    </div>
+
+    <!-- SIKERES KÜLDÉS UTÁN MEGJELENŐ ÜZENET -->
+    <div class="success-box" id="successBox">
+      <div class="success-icon">🎉</div>
+      <h2>Jelentkezés sikeres!</h2>
+      <p>Hamarosan felvesszük veled a kapcsolatot a részletekkel.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         IDE ÍRD BE A FORMSPREE VÉGPONTOD:
+         1. Regisztrálj: https://formspree.io
+         2. Hozz létre új formot
+         3. Cseréld le az action URL-t:
+            action="https://formspree.io/f/XXXXXXXX"
+         ════════════════════════════════════════════ -->
+    <form id="regForm" action="https://formspree.io/f/XXXXXXXX" method="POST">
+
+      <!-- Rejtett mező: automatikus időbélyeg -->
+      <input type="hidden" name="Időbélyeg" id="timestamp">
+
+      <div class="row">
+        <div class="field">
+          <label for="nev">Teljes név *</label>
+          <input type="text" id="nev" name="Név" placeholder="Kovács Anna" required>
+        </div>
+        <div class="field">
+          <label for="tel">Telefonszám</label>
+          <input type="tel" id="tel" name="Telefonszám" placeholder="+36 30 …">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email cím *</label>
+        <input type="email" id="email" name="Email" placeholder="anna@example.com" required>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label>Étel intolerancia / allergia</label>
+        <div class="allergy-grid">
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Gluténmentes" value="Igen">
+            <span>Gluténmentes</span>
+          </label>
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Laktózmentes" value="Igen">
+            <span>Laktózmentes</span>
+          </label>
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Vegetáriánus" value="Igen">
+            <span>Vegetáriánus</span>
+          </label>
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Vegán" value="Igen">
+            <span>Vegán</span>
+          </label>
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Diómentes" value="Igen">
+            <span>Diómentes</span>
+          </label>
+          <label class="allergy-opt">
+            <input type="checkbox" name="Allergia_Egyéb" value="Igen">
+            <span>Egyéb →</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:1rem">
+        <label for="megj">Megjegyzés</label>
+        <textarea id="megj" name="Megjegyzés" placeholder="Bármi egyéb amit tudnunk kell…"></textarea>
+      </div>
+
+      <button type="submit" class="submit" id="submitBtn">
+        Jelentkezem a hétvégére
+      </button>
+      <div class="error-msg" id="errorMsg">
+        Sajnos hiba történt. Kérjük, próbáld újra vagy írj nekünk emailben.
+      </div>
+    </form>
+
+    <p class="footer-note">A megadott adatokat kizárólag a rendezvény szervezéséhez használjuk.</p>
+  </div>
+</div>
+
+<script>
+  // Automatikus időbélyeg
+  document.getElementById('timestamp').value = new Date().toLocaleString('hu-HU');
+
+  const form = document.getElementById('regForm');
+  const btn  = document.getElementById('submitBtn');
+  const successBox = document.getElementById('successBox');
+  const errorMsg   = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.textContent = 'Küldés…';
+    errorMsg.style.display = 'none';
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        successBox.style.display = 'block';
+      } else {
+        throw new Error('Szerver hiba');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Jelentkezem a hétvégére';
+      errorMsg.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
